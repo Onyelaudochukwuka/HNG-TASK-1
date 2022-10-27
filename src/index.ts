@@ -1,4 +1,4 @@
-import express, { Application } from "express";
+import express, { Application, Request, Response } from "express";
 require("dotenv").config();
 const cors = require("cors");
 interface Server {
@@ -17,9 +17,23 @@ app.use(cors({
 }));
 app.use(express.json());
 // Define routes
-app.get("/", (req, res) => {
+interface Res{
+    slackUsername: string;
+    backend: boolean;
+    age: number;
+    bio: string;
+}
+app.get("/", (req: Request, res: Response<Res>) => {
     res.status(200).json({
-
+                slackUsername: "Onyela Udochukwuka",
+                backend: true,
+                age: 18,
+                bio: "My Name is Udochukwuka Onyela I'm a student of the university of benin. I'm a fullstack developer and I love to code"
+    })
+});
+app.use("*", (req: Request, res: Response<{message: string}>) => {
+    res.status(404).json({
+        message: "Route not found"
     })
 });
 const PORT = 3000 || process.env.PORT;
