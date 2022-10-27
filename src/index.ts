@@ -12,12 +12,14 @@ type Options = {
 const options:Options = { limit: "10mb", extended: true };
 
 const app: Application = express();
-app.use(cors());
+app.use(cors({
+    origin: "*"
+}));
 app.use(express.json());
 // Define routes
 app.get("/", (req, res) => {
     res.status(200).json({
-        
+
     })
 });
 const PORT = 3000 || process.env.PORT;
