@@ -25,7 +25,7 @@ interface Res{
 }
 app.get("/", (req: Request, res: Response<Res>) => {
     res.status(200).json({
-                slackUsername: "Onyela Udochukwuka",
+        slackUsername: "FUMUDUKUS",
                 backend: true,
                 age: 18,
                 bio: "My Name is Udochukwuka Onyela I'm a student of the university of benin. I'm a fullstack developer and I love to code"
@@ -44,7 +44,7 @@ interface PostRes {
 }
 app.post("/evaluate", (req: Request<Req>, res: Response<PostRes>) => {
     const { operation_type, x, y } = req.body as Req;
-    let operator: string;
+    let operator: string = "";
     switch (operation_type) {
         case "addition":
             operator = "+";
@@ -56,16 +56,44 @@ app.post("/evaluate", (req: Request<Req>, res: Response<PostRes>) => {
             operator = "*";
             break;
         default:
-            res.status(400).json({
-                message: "Invalid operation type"
-            })
-            return;
+            if (/add/.test(operation_type)) {
+                const valueArr = operation_type.match(/[+-]?\d?\d/g);
+                console.log(valueArr);
+                res.status(200).json({
+                    slackUsername: "FUMUDUKUS",
+                    result: valueArr?.reduce((acc, curr) => acc + Number(curr), 0),
+                    operation_type: "addition",
+                })
+            }
+            if (/subtract/.test(operation_type)) {
+                const valueArr = operation_type.match(/[+-]?\d?\d/g);
+                console.log(valueArr);
+                res.status(200).json({
+                    slackUsername: "FUMUDUKUS",
+                    result: valueArr?.reduce((acc, curr) => acc - Number(curr), 0),
+                    operation_type: "subtraction",
+                })
+            }
+            if (/multiply/.test(operation_type)) {
+                const valueArr = operation_type.match(/[+-]?\d?\d/g);
+                console.log(valueArr);
+                res.status(200).json({
+                    slackUsername: "FUMUDUKUS",
+                    result: valueArr?.reduce((acc, curr) => acc * Number(curr), 1),
+                    operation_type: "multiplication",
+                })
+            }
+            else {
+                res.status(400).json({
+                    message: "Invalid operation type"
+                })
+            }
     }
     const result = Function(`return ${x} ${operator} ${y}`);
     res.status(200).json({
-        slackUsername: "Onyela Udochukwuka",
-        result: result(),
+        slackUsername: "FUMUDUKUS",
         operation_type,
+        result: result(),
 
     })
 });
