@@ -31,6 +31,44 @@ app.get("/", (req: Request, res: Response<Res>) => {
                 bio: "My Name is Udochukwuka Onyela I'm a student of the university of benin. I'm a fullstack developer and I love to code"
     })
 });
+interface Req{
+        operation_type: string;
+        x: number;
+        y: number;
+}
+interface PostRes {
+    slackUsername?: string;
+    message?: string;
+    result?: number;
+    operation_type?: string;
+}
+app.post("/evaluate", (req: Request<Req>, res: Response<PostRes>) => {
+    const { operation_type, x, y } = req.body as Req;
+    let operator: string;
+    switch (operation_type) {
+        case "addition":
+            operator = "+";
+            break;
+        case "subtraction":
+            operator = "-";
+            break;
+        case "multiplication":
+            operator = "*";
+            break;
+        default:
+            res.status(400).json({
+                message: "Invalid operation type"
+            })
+            return;
+    }
+    const result = Function(`return ${x} ${operator} ${y}`);
+    res.status(200).json({
+        slackUsername: "Onyela Udochukwuka",
+        result: result(),
+        operation_type,
+
+    })
+});
 app.use("*", (req: Request, res: Response<{message: string}>) => {
     res.status(404).json({
         message: "Route not found"
