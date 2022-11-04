@@ -59,32 +59,32 @@ app.post("/evaluate", (req: Request<Req>, res: Response<PostRes>) => {
             if (/add/.test(operation_type)) {
                 const valueArr = operation_type.match(/[+-]?\d*/g);
                 console.log(valueArr);
-                res.status(200).json({
+                return res.status(200).json({
                     slackUsername: "FUMUDUKUS",
                     result: valueArr?.reduce((acc, curr) => acc + Number(curr), 0),
                     operation_type: "addition",
                 })
             }
-            if (/subtract/.test(operation_type)) {
+           else if (/subtract/.test(operation_type)) {
                 const valueArr = operation_type.match(/[+-]?\d*/g);
                 console.log(valueArr);
-                res.status(200).json({
+                return res.status(200).json({
                     slackUsername: "FUMUDUKUS",
                     result: valueArr?.reduce((acc, curr) => acc - Number(curr), 0),
                     operation_type: "subtraction",
                 })
             }
-            if (/multiply/.test(operation_type)) {
+           else if (/multiply/.test(operation_type)) {
                 const valueArr = operation_type.match(/[+-]?\d*/g);
                 console.log(valueArr);
-                res.status(200).json({
+               return res.status(200).json({
                     slackUsername: "FUMUDUKUS",
                     result: valueArr?.reduce((acc, curr) => acc * Number(curr), 1),
                     operation_type: "multiplication",
                 })
             }
             else {
-                res.status(400).json({
+                return res.status(400).json({
                     message: "Invalid operation type"
                 })
             }
