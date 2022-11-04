@@ -58,7 +58,6 @@ app.post("/evaluate", (req: Request<Req>, res: Response<PostRes>) => {
         default:
             if (/add/.test(operation_type)) {
                 const valueArr = operation_type.match(/[+-]?\d*/g);
-                console.log(valueArr);
                 return res.status(200).json({
                     slackUsername: "FUMUDUKUS",
                     result: valueArr?.reduce((acc, curr) => acc + Number(curr), 0),
@@ -67,7 +66,6 @@ app.post("/evaluate", (req: Request<Req>, res: Response<PostRes>) => {
             }
            else if (/subtract/.test(operation_type)) {
                 const valueArr = operation_type.match(/[+-]?\d*/g);
-                console.log(valueArr);
                 return res.status(200).json({
                     slackUsername: "FUMUDUKUS",
                     result: valueArr?.reduce((acc, curr) => acc - Number(curr), 0),
@@ -76,7 +74,6 @@ app.post("/evaluate", (req: Request<Req>, res: Response<PostRes>) => {
             }
            else if (/multiply/.test(operation_type)) {
                 const valueArr = operation_type.match(/[+-]?\d*/g);
-                console.log(valueArr);
                return res.status(200).json({
                     slackUsername: "FUMUDUKUS",
                     result: valueArr?.reduce((acc, curr) => acc * Number(curr), 1),
